@@ -382,6 +382,7 @@ resource "azurerm_private_endpoint" "my_private_endpoint" {
   private_service_connection {
     name                           = "example-privateserviceconnection"
     private_connection_resource_id = azurerm_app_service.main.id
+    subresource_names = ["sites"]
     is_manual_connection           = false
   }
 }

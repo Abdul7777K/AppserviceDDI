@@ -20,9 +20,9 @@ provider "azurerm" {
 data "terraform_remote_state" "workspace_b" {
   backend = "remote"
   config = {
-    organization = "<Your_Terraform_Cloud_Organization_Name>"
+    organization = "Demo-DDI"
     workspaces = {
-      name = "Workspace_B_Name"
+      name = "Vnetddi"
     }
   }
 }

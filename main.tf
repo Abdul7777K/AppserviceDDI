@@ -386,3 +386,4 @@ resource "azurerm_private_endpoint" "my_private_endpoint" {
     is_manual_connection           = false
   }
 }
+#....

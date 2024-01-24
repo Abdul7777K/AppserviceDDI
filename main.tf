@@ -371,7 +371,7 @@ data "tfe_outputs" "vnetddi" {
 resource "azurerm_app_service_virtual_network_swift_connection" "main" {
   count          = var.enable_vnet_integration == true ? 1 : 0
   app_service_id = azurerm_app_service.main.id
-  subnet_id      = data.tfe_outputs.vnetddi.values.subnet_info["subnet1"].id
+  subnet_id      = data.tfe_outputs.vnetddi.outputs.values.subnet_info["subnet1"].id
 }
 
 #-------------------------------------------------------------

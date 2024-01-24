@@ -255,7 +255,7 @@ variable "disable_ip_masking" {
 
 variable "enable_vnet_integration" {
   description = "Manages an App Service Virtual Network Association"
-  default     = false
+  default     = true
 }
 
 variable "tags" {

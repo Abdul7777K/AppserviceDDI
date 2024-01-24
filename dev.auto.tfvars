@@ -1,7 +1,7 @@
 create_resource_group = true
 resource_group_name   = "demoddi-rg-dev-tfpoc-eastus2-001"
 location              = "eastus"
-app_service_name      = "demoddi-site-dev-tfpoc-eastus2-001"
+app_service_name      = "demoddi-site-dev-tfpoc-eastus2-001-00"
 app_service_plan_name = "demoddi-asp-dev-tfpoc-eastus2-001"
 sku_name              = "S1"
 os_type               = "Windows"

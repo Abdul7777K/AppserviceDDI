@@ -371,24 +371,7 @@ data "tfe_outputs" "vnetddi" {
 resource "azurerm_app_service_virtual_network_swift_connection" "main" {
   count          = var.enable_vnet_integration == true ? 1 : 0
   app_service_id = azurerm_app_service.main.id
-  subnet_id      = data.tfe_outputs.vnetddi.values.subnet_info[1].id
+ # subnet_id      = data.tfe_outputs.vnetddi.values.subnet_info[1].id 
+  subnet_id = data.tfe_outputs.vnetddi.values.subnet_info["subnet2"].id
+
 }
-
-#-------------------------------------------------------------
-# App Service Private End Point
-#-------------------------------------------------------------
-
-resource "azurerm_private_endpoint" "my_private_endpoint" {
-  name                = "example-private-endpoint"
-  location            = local.location
-  resource_group_name = local.resource_group_name
-  subnet_id           = data.tfe_outputs.vnetddi.values.subnet_info[1].id
-
-  private_service_connection {
-    name                           = "example-privateserviceconnection"
-    private_connection_resource_id = azurerm_app_service.main.id
-    subresource_names = ["sites"]
-    is_manual_connection           = false
-  }
-}
-#....

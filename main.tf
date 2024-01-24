@@ -360,13 +360,18 @@ resource "azurerm_application_insights" "main" {
   depends_on          = [azurerm_log_analytics_workspace.law]
 }
 
+data "tfe_outputs" "vnetddi" {
+  organization = "Demo-DDI"
+  workspace = "tfeworkspace1"
+}
+
 #-------------------------------------------------------------
 # App Service Virtual Network Association - Default is "false"
 #-------------------------------------------------------------
 resource "azurerm_app_service_virtual_network_swift_connection" "main" {
   count          = var.enable_vnet_integration == true ? 1 : 0
   app_service_id = azurerm_app_service.main.id
-  subnet_id      = var.subnet_id
+  subnet_id      = data.tfe_outputs.vnetddi.outputs.subnet_info.Values[0].id
 }
 
 #-------------------------------------------------------------
@@ -377,7 +382,7 @@ resource "azurerm_private_endpoint" "my_private_endpoint" {
   name                = "example-private-endpoint"
   location            = local.location
   resource_group_name = local.resource_group_name
-  subnet_id           = data.terraform_remote_state.workspace_b.outputs.subnet_id
+  subnet_id           = data.tfe_outputs.vnetddi.outputs.subnet_info.Values[0].id #data.terraform_remote_state.workspace_b.outputs.subnet_id
 
   private_service_connection {
     name                           = "example-privateserviceconnection"

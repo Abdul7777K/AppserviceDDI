@@ -371,7 +371,7 @@ data "tfe_outputs" "vnetddi" {
 resource "azurerm_app_service_virtual_network_swift_connection" "main" {
   count          = var.enable_vnet_integration == true ? 1 : 0
   app_service_id = azurerm_app_service.main.id
-  subnet_id      = data.tfe_outputs.vnetddi.values.subnet_info["subnet1"].id
+  subnet_id      = try([for subnet in data.tfe_outputs.vnetddi.values.subnet_info : subnet.id if subnet.name == "subnet1"][0], null) #data.tfe_outputs.vnetddi.values.subnet_info["subnet1"].id
 }
 
 #-------------------------------------------------------------
@@ -382,7 +382,7 @@ resource "azurerm_private_endpoint" "my_private_endpoint" {
   name                = "example-private-endpoint"
   location            = local.location
   resource_group_name = local.resource_group_name
-  subnet_id           = data.tfe_outputs.vnetddi.values.subnet_info["subnet1"].id #data.terraform_remote_state.workspace_b.outputs.subnet_id
+  subnet_id           = try([for subnet in data.tfe_outputs.vnetddi.values.subnet_info : subnet.id if subnet.name == "subnet1"][0], null) #data.tfe_outputs.vnetddi.values.subnet_info["subnet1"].id #data.terraform_remote_state.workspace_b.outputs.subnet_id
 
   private_service_connection {
     name                           = "example-privateserviceconnection"
